@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import StudentForm from './form';
+// import StudentForm from './form';
 
 function TableData() {
+  const [userName ,  setuserName] = useState('')
+  const [userEmail ,  setuserEmail] = useState('')
     const [Data, setData] =useState([
         {
           "id": 1,
@@ -235,6 +237,24 @@ function TableData() {
         }
       ])
 
+function HandleNameChange(e){
+  setuserName(e.target.value)
+}
+
+  function HandleEmailChange(e){
+    setuserEmail( e.target.value)
+  }
+
+function AddUser(){
+  const userAdd ={"name" : userName , "email" : userEmail}
+  setData([...Data,userAdd])
+  console.log(Data)
+
+  setuserEmail("")
+  setuserName("")
+
+}
+
 const tableRows = Data.map((info) => {
 	return (
 	<tr>
@@ -243,10 +263,6 @@ const tableRows = Data.map((info) => {
 	</tr>
 	);
 });
-
-const addRows = (data) => {
-	setData.push(data);
-};
 
 return (
 	<div>
@@ -259,7 +275,11 @@ return (
 		</thead>
 		<tbody>{tableRows}</tbody>
 	</table>
-	<StudentForm func={addRows} />
+
+  <input value = {userName} onChange = {HandleNameChange}/>
+  <input value = {userEmail} onChange = {HandleEmailChange}/>
+  <button onClick={AddUser}>Add User</button>
+
 	</div>
 );
 }
